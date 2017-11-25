@@ -7,48 +7,48 @@ Created on Sat Nov 25 16:26:37 2017
 import numpy as np
 import random
 import matplotlib.pyplot as plt
+from scipy.fftpack import fft
 
 #y = x + 2*random.randrange(10);
 
 
-def fft(y,N=80,Ts=1.0/40.0):
+def fft_transform(y,N=80,Ts=1.0/40.0):
 
-    
-    from scipy.fftpack import fft
-    yf = fft(y)
-    xf = np.linspace(0.0, 1.0/(2.0*Ts), int(N/2))
-    yf_plt = 2.0/N * np.abs(yf[0:int(N/2)])
-    inte=np.sum(yf_plt[16:])
+	y_mag=[i[0]**2+i[1]**2+i[2]**2 for i in y]
+	yf = fft(y_mag)
+	xf = np.linspace(0.0, 1.0/(2.0*Ts), int(N/2))
+	yf_plt = 2.0/N * np.abs(yf[0:int(N/2)])
+	inte=np.sum(yf_plt[16:])
 
-    '''
-    from scipy.integrate import simps
-    inte = simps(yf_plt,xf)
-    print(inte)
-    '''
-    return xf,yf_plt,inte
-
-
-# Number of samplepoints
-N = 80
-# sample spacing
-Ts = 1.0 / 40.0
-t = np.linspace(0.0, N*Ts, N)
-y1 = 2*np.sin(6 * 2.0*np.pi*t) + 1*np.sin(10 * 2.0*np.pi*t)
-r = [random.randrange(1000)/1000 for i in y1]
-y = y1 #+ r
-y2 = [np.sin(6 * 2.0*np.pi*i) + 0.5*np.sin(10 * 2.0*np.pi*i) for i in t[40:]]
-y = [0]*40+y2
-xf, yf_plt, inte = fft(y)
+	'''
+	from scipy.integrate import simps
+	inte = simps(yf_plt,xf)
+	print(inte)
+	'''
+	return xf,yf_plt,inte
 
 
-print(inte)
-plt.plot(t, y)
-plt.grid()
-plt.show()
+# # Number of samplepoints
+# N = 80
+# # sample spacing
+# Ts = 1.0 / 40.0
+# t = np.linspace(0.0, N*Ts, N)
+# y1 = 2*np.sin(6 * 2.0*np.pi*t) + 1*np.sin(10 * 2.0*np.pi*t)
+# r = [random.randrange(1000)/1000 for i in y1]
+# y = y1 #+ r
+# y2 = [np.sin(6 * 2.0*np.pi*i) + 0.5*np.sin(10 * 2.0*np.pi*i) for i in t[40:]]
+# y = [0]*40+y2
+# xf, yf_plt, inte = fft(y)
 
-plt.plot(xf, yf_plt)
-plt.grid()
-plt.show()
+
+# print(inte)
+# plt.plot(t, y)
+# plt.grid()
+# plt.show()
+
+# plt.plot(xf, yf_plt)
+# plt.grid()
+# plt.show()
 
 '''
 # Learn about API authentication here: https://plot.ly/python/getting-started

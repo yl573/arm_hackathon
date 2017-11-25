@@ -16,25 +16,29 @@ def find_nearest(array,value):
 
 def fft_transform(y,N=40,Ts=1.0/40.0,cutoff=8):
     
-    y_mag=np.array([np.linalg.norm(i) for i in y])
+    # NOTE: X_T is in the form [[x1,x2,...,xn],[y1,y2,...,yn],[z1,z2,...,zn]], 
+    # otherwise is in the form [[x1,y1,z1],[x2,y2,z2],......,[xn,yn,zn]]
+    y_T = np.transpose(np.array(y))
+    #print(y_T)
     
-    from scipy.fftpack import fft
-    yf = fft(y_mag)
+    yf_T = [fft(y_T[0]),fft(y_T[1]),fft(y_T[2])]
+    yf = np.transpose(np.array(yf_T))
+    
+    yf_mag = [np.linalg.norm(i) for i in yf]
+    #print(yf_mag)
+    
     xf = np.linspace(0.0, 1.0/(2.0*Ts), int(N/2))
-    yf_plt = 2.0/N * np.abs(yf[0:int(N/2)])
+    yf_plt = 2.0/N * np.abs(yf_mag[0:int(N/2)])
     
     idx = find_nearest(xf,8)
     inte=np.sum(yf_plt[idx:])
+    #print('y[cutoff] =',yf_plt[idx])
 
     '''
     from scipy.integrate import simps
     inte = simps(yf_plt,xf)
     print(inte)
     '''
-    print(inte)
-    plt.plot(t, y_mag)
-    plt.grid()
-    plt.show()
 
     return xf,yf_plt,inte
 
@@ -45,7 +49,8 @@ N = 80
 Ts = 1.0 / 40.0
 t = np.linspace(0.0, N*Ts, N)
 y1 = 2*np.sin( 6* 2.0*np.pi*t) + 1*np.sin(10 * 2.0*np.pi*t)
-y = [[i ,0,0] for i in y1]
+y2 = 2*np.sin( 2* 2.0*np.pi*t)
+y = np.array([[i ,0,0] for i in y1])+np.array([[0 ,i,0] for i in y2])
 #+ random.randrange(1000)/1000
 #y2 = [np.sin(6 * 2.0*np.pi*i) + 0.5*np.sin(10 * 2.0*np.pi*i) for i in t[40:]]
 #y = [0]*40+y2

@@ -6,7 +6,7 @@ Created on Sat Nov 25 16:26:37 2017
 """
 import numpy as np
 import random
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from scipy.fftpack import fft
 
 #y = x + 2*random.randrange(10);

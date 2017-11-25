@@ -2,7 +2,7 @@ from flask import Flask, request
 import socket
 import numpy as np
 import fft
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import time
 
 app = Flask(__name__)
@@ -20,19 +20,16 @@ def hello_world():
 	Ts = 1.0/40
 	(xf,yf_plt,inte) = fft.fft_transform(float_readings,N=N,Ts=Ts)
 
-	
-	plt.xlabel('Frequency')
-	plt.ylabel('Power')
-	plt.ylim(0,1)
-	plt.plot(xf[2:], yf_plt[2:])
-	plt.pause(0.2)
-	plt.clf()
-	#plt.show(block=False)
-
+	# plt.xlabel('Frequency')
+	# plt.ylabel('Power')
+	# plt.ylim(0,1)
+	# plt.plot(xf[2:], yf_plt[2:])
+	# plt.pause(0.2)
+	# plt.clf()
 
 	print(yf_plt)
 	return 'ok'
 
 if __name__ == '__main__':
-	print("Your IP address is: ", socket.gethostbyname(socket.gethostname()))
+	print("Your IP address is: %s" % socket.gethostbyname(socket.gethostname()))
 	app.run(host='0.0.0.0', port=8080)

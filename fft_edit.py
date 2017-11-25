@@ -7,7 +7,6 @@ Created on Sat Nov 25 16:26:37 2017
 import numpy as np
 import random
 import matplotlib.pyplot as plt
-from scipy.fftpack import fft
 
 #y = x + 2*random.randrange(10);
 
@@ -19,7 +18,7 @@ def fft_transform(y,N=40,Ts=1.0/40.0,cutoff=8):
     
     y_mag=np.array([np.linalg.norm(i) for i in y])
     
-
+    from scipy.fftpack import fft
     yf = fft(y_mag)
     xf = np.linspace(0.0, 1.0/(2.0*Ts), int(N/2))
     yf_plt = 2.0/N * np.abs(yf[0:int(N/2)])
@@ -32,7 +31,10 @@ def fft_transform(y,N=40,Ts=1.0/40.0,cutoff=8):
     inte = simps(yf_plt,xf)
     print(inte)
     '''
-
+    print(inte)
+    plt.plot(t, y_mag)
+    plt.grid()
+    plt.show()
 
     return xf,yf_plt,inte
 

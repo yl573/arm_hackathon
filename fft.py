@@ -49,7 +49,6 @@ y = [[i ,0,0] for i in y1]
 #y = [0]*40+y2
 xf, yf_plt, inte = fft_transform(y,N,Ts,8)
 
-
 print(inte)
 
 plt.plot(xf, yf_plt)

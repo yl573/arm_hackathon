@@ -1,9 +1,9 @@
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import SocketServer
 import socket
- 
+
+
 class MyHandler(BaseHTTPRequestHandler):
- 
     # HTTP REQUESTS HERE
     def do_POST(self):
         content = b"POST: Hello, Mbed!"
@@ -46,4 +46,4 @@ def run():
  
 if __name__ == '__main__':
     run()
- 
+

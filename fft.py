@@ -39,25 +39,25 @@ def fft_transform(y,N=40,Ts=1.0/40.0,cutoff=8):
 
     return xf,yf_plt,inte
 
-
-# # Number of samplepoints
-# N = 80
-# # sample spacing
-# Ts = 1.0 / 40.0
-# t = np.linspace(0.0, N*Ts, N)
-# y1 = 2*np.sin( 6* 2.0*np.pi*t) + 1*np.sin(10 * 2.0*np.pi*t)
-# y = [[i ,0,0] for i in y1]
-# #+ random.randrange(1000)/1000
-# #y2 = [np.sin(6 * 2.0*np.pi*i) + 0.5*np.sin(10 * 2.0*np.pi*i) for i in t[40:]]
-# #y = [0]*40+y2
-# xf, yf_plt, inte = fft_transform(y,N,Ts,8)
-
-
-# print('integral for freq > cutoff is',inte)
+'''
+# Number of samplepoints
+N = 80
+# sample spacing
+Ts = 1.0 / 40.0
+t = np.linspace(0.0, N*Ts, N)
+y1 = 2*np.sin( 6* 2.0*np.pi*t) + 1*np.sin(10 * 2.0*np.pi*t)
+y = [[i ,0,0] for i in y1]
+#+ random.randrange(1000)/1000
+#y2 = [np.sin(6 * 2.0*np.pi*i) + 0.5*np.sin(10 * 2.0*np.pi*i) for i in t[40:]]
+#y = [0]*40+y2
+xf, yf_plt, inte = fft_transform(y,N,Ts,8)
 
 
-# plt.plot(xf, yf_plt)
-# plt.grid()
-# plt.show()
+print('integral for freq > cutoff is',inte)
 
 
+plt.plot(xf, yf_plt)
+plt.grid()
+plt.show()
+print(xf,yf_plt)
+'''

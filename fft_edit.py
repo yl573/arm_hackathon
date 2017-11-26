@@ -10,9 +10,6 @@ import matplotlib.pyplot as plt
 
 #y = x + 2*random.randrange(10);
 
-def find_nearest(array,value):
-    idx = (np.abs(array-value)).argmin()
-    return idx
 
 def fft_transform(y,N=40,Ts=1.0/40.0,cutoff=8):
     
@@ -29,8 +26,9 @@ def fft_transform(y,N=40,Ts=1.0/40.0,cutoff=8):
     
     xf = np.linspace(0.0, 1.0/(2.0*Ts), int(N/2))
     yf_plt = 2.0/N * np.abs(yf_mag[0:int(N/2)])
+    print(yf_plt)
     
-    idx = find_nearest(xf,8)
+    idx = (np.abs(xf-cutoff)).argmin() #find nearest idx in x at cutoff
     inte=np.sum(yf_plt[idx:])
     #print('y[cutoff] =',yf_plt[idx])
 

@@ -6,19 +6,41 @@ import matplotlib.pyplot as plt
 import time
 import threading
 import detection
+from sms_new import send_sms
+from database import save_to_db
+from cache import MyCache
 
 check_seconds = 5
 
 global cancel_alarm
 global alarm_countdown
+global additional
 cancel_alarm = False
 alarm_countdown = False
+additional = ''
+
+cache=MyCache(5)
 
 def alarm():
 	global cancel_alarm
 	global alarm_countdown
+	acc_array = cache.cache['acc']['value'].tolist()
+	if additional != '':
+		temp, light, hum, co2 = tuple([float(x) for x in additional.split(' ')])
+	else:
+		temp, light, hum, co2 = (0,0,0,0)
 	if not cancel_alarm:
 		print('Alarm!!!')
+		is_seizure = True
+		try:
+			send_sms('Seizure Alert!')
+		except Exception:
+			print('cannot send sms')
+	else:
+		print('False alarm!!!')
+		is_seizure = False
+
+	save_to_db(temp, light, hum, co2, acc_array, True)	
 	cancel_alarm = False
 	alarm_countdown = False
 
@@ -53,7 +75,9 @@ def on_data():
 		plt.pause(0.2)
 		plt.clf()
 
-		seizure = detection.detect(yf_plt)
+		cache.update('acc',float_readings)
+
+		seizure = detection.detect(yf_plt, threshold=4, amp_thresh=0.6)
 		print(seizure)
 		if seizure:
 			threading.Timer(check_seconds, alarm).start()
@@ -70,6 +94,13 @@ def cancel_timer():
 	cancel_alarm = True
 	print('alarm cancelled')
 	return make_response('cancelled')
+
+@app.route('/additional', methods=['POST'])
+def recieve_light():
+	global additional
+	raw_readings = request.data.decode()
+	additional = raw_readings
+	return make_response('recieved')
 
 if __name__ == '__main__':
 	print("Your IP address is: %s" % socket.gethostbyname(socket.gethostname()))

@@ -9,7 +9,7 @@ import numpy as np
 def getKey(item):
     return item[1]
 
-def detect(yf_plt,N=40,Ts=1.0/40.0,cutoff=2.5,threshold=5.0):
+def detect(yf_plt,N=40,Ts=1.0/40.0,cutoff=2.5,threshold=5.0, amp_thresh=0.2):
     det=False
     
     xf = np.linspace(0.0, 1.0/(2.0*Ts), int(N/2)) #generate list of frequencies
@@ -19,7 +19,7 @@ def detect(yf_plt,N=40,Ts=1.0/40.0,cutoff=2.5,threshold=5.0):
     xy_list = [(xf[i],yf_plt[i]) for i in range(int(N/2))[cutoff_idx:]]
     xy_sorted=sorted(xy_list,key=getKey,reverse=True)
     
-    if xy_sorted[0][0]>threshold and xy_sorted[0][1]>0.2:
+    if xy_sorted[0][0]>threshold and xy_sorted[0][1]>amp_thresh:
         det=True
     
     return det

@@ -5,6 +5,7 @@ import fft
 import matplotlib.pyplot as plt
 import time
 import threading
+import detection
 
 check_seconds = 5
 
@@ -52,10 +53,8 @@ def on_data():
 		plt.pause(0.2)
 		plt.clf()
 
-		print(yf_plt)
-
-		
-		seizure = True
+		seizure = detection.detect(yf_plt)
+		print(seizure)
 		if seizure:
 			threading.Timer(check_seconds, alarm).start()
 			alarm_countdown = True

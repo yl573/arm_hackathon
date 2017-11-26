@@ -19,7 +19,7 @@ def detect(yf_plt,N=40,Ts=1.0/40.0,cutoff=2.5,threshold=5.0):
     xy_list = [(xf[i],yf_plt[i]) for i in range(int(N/2))[cutoff_idx:]]
     xy_sorted=sorted(xy_list,key=getKey,reverse=True)
     
-    if xy_sorted[0][0]>threshold:
+    if xy_sorted[0][0]>threshold and xy_sorted[0][1]>0.2:
         det=True
     
     return det
@@ -46,5 +46,5 @@ def detect(yf_plt,N=40,Ts=1.0/40.0,cutoff=2.5,threshold=5.0):
 #    5.80968788e-02,   5.63331479e-02,   5.49039316e-02,   5.37596195e-02,
 #    5.28641407e-02,   5.21913993e-02,   5.17229631e-02,   5.14465705e-02])
 
-# a=detection(yf_plt,80)
+# a=detect(yf_plt,80)
 # print(a)

@@ -53,6 +53,8 @@ def on_data():
 		plt.clf()
 
 		print(yf_plt)
+
+		
 		seizure = True
 		if seizure:
 			threading.Timer(check_seconds, alarm).start()

@@ -32,7 +32,7 @@ def detect_diff(yf_plt,N=40,Ts=1.0/40.0,cutoff=2.5,threshold=0.361):
     
     dy = np.array([0] + [yf_plt[i+1]-yf_plt[i] for i in range(len(yf_plt)-1)])
     dx = np.array([1.0/(2.0*Ts) / (int(N/2)-1)] * len(yf_plt))
-    deriv = abs(dy/dx)
+    deriv = dy/dx
     
     cutoff_idx = (np.abs(xf-cutoff)).argmin() #find nearest idx in x at cutoff
     deriv = deriv[cutoff_idx:] #cut off derivateives at low frequency
